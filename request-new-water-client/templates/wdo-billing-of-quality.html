@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+  <title>Dashboard</title>
+
+  <!-- General CSS Files -->
+  <link rel="stylesheet" href="/static/assets/modules/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/static/assets/modules/fontawesome/css/all.min.css">
+  <link rel="icon" href="{{ url_for('static', filename='images/icons/icon-152x152.png') }}" type="image/x-icon">
+  <!-- CSS Libraries -->
+
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="/static/assets/css/style.css">
+  <link rel="stylesheet" href="/static/assets/css/components.css">
+<!-- Start GA -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
+
+<script src="/static/html2canvas.min.js"></script>
+<script src="https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-94034622-3');
+</script>
+<!-- /END GA --></head>
+
+<body>
+  <div id="app">
+    <div class="main-wrapper main-wrapper-1">
+      <div class="navbar-bg"></div>
+      <nav class="navbar navbar-expand-lg main-navbar">
+        <form class="form-inline mr-auto">
+          <ul class="navbar-nav mr-3">
+            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
+            <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
+          </ul>
+        </form>
+        <ul class="navbar-nav navbar-right">
+          
+          <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep"><i class="far fa-bell"></i></a>
+            <div class="dropdown-menu dropdown-list dropdown-menu-right">
+              <div class="dropdown-header">Notifications
+                <div class="float-right">
+                  
+                </div>
+              </div>
+              <div class="dropdown-list-content dropdown-list-icons">
+                <a href="#" class="dropdown-item dropdown-item-unread">
+                  <div class="dropdown-item-icon bg-info text-white">
+                    <i class="fas fa-bell"></i>
+                  </div>
+                  <div class="dropdown-item-desc">
+                    Template update is available now!
+                    <div class="time text-primary">2 Min Ago</div>
+                  </div>
+                </a>
+                <a href="#" class="dropdown-item">
+                  <div class="dropdown-item-icon bg-success text-white">
+                    <i class="fas fa-check"></i>
+                  </div>
+                  <div class="dropdown-item-desc">
+                    <b>You</b> and <b>Dedik Sugiharto</b> are now friends
+                    <div class="time">10 Hours Ago</div>
+                  </div>
+                </a>
+                
+              </div>
+              <div class="dropdown-footer text-center">
+                
+              </div>
+            </div>
+          </li>
+          <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+            <img alt="image" src="/static/assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
+            <div class="d-sm-none d-lg-inline-block">Hi, {{user['lastname']}} {{user['firstname']}}</div></a>
+            <div class="dropdown-menu dropdown-menu-right">
+              <div class="dropdown-divider"></div>
+              <a href="{{url_for('logout')}}" class="dropdown-item has-icon text-danger">
+                <i class="fas fa-sign-out-alt"></i> Logout
+              </a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <div class="main-sidebar sidebar-style-2">
+        <aside id="sidebar-wrapper">
+          <div class="sidebar-brand">
+            <a href="#">WASAC</a>
+          </div>
+          <div class="sidebar-brand sidebar-brand-sm">
+            <a href="#">W</a>
+          </div>
+          <ul class="sidebar-menu">
+            <li class="menu-header">Dashboard</li>
+
+            <li class="dropdown active">
+              <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Menu</span></a>
+              <ul class="dropdown-menu">
+                <li><a class="nav-link" href="{{url_for('wdoDashboard')}}">Dashboard</a></li>
+              </ul>
+            </li>
+          </ul>
+
+        </aside>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <section class="section">
+          <div class="section-header">
+            <h1>Requests</h1>
+          </div>
+
+          <div class="section-body">
+            <h2 class="section-title">List</h2>
+            <a href="#" class="btn btn-primary" id="additembtn">Add Item</a>
+            <a href="#" class="btn btn-primary" id="addmanpbtn">Add ManPower</a>
+            <a href="#" class="btn btn-dark" onclick="convert_Html()">Print Form</a>
+            <p class="section-lead">
+              
+            </p>
+            <!-- the start of the table -->
+            <div class="row" >
+              <div class="col-12">
+                <div class="card" id="contentToPrint">
+                  <div class="col-12 col-md-6 col-lg-12">
+                    <div class="card">
+                      <div class="card-header">
+                        <h4><pre>I.      Client Description</pre></h4>
+                      </div>
+                      <div class="card-body">
+
+                        <!-- upper part start -->
+                        <div class="table-responsive">
+                        <div style="width: 1000px; ">
+                            
+                            <div style="width: 35%;float: left; ">
+                                <p>Names: {{areq['customer']['firstname']}} {{areq['customer']['lastname']}}</p>
+                                <p>ID Number: {{areq['nid']}} </p>
+                                <p>District: {{areq['district']}} </p>
+                                <p>Sector: {{areq['sector']}}</p>
+                                <p>Cell: {{areq['cell']}}</p>
+                                <p>Village: {{areq['village']}}</p>
+                                <p>Plot Number: {{areq['plotn']}}</p>
+                                <p>Tel: {{areq['customer']['phone']}} </p>
+                            </div>
+                            <div style="width: 55%;float: right;">
+                                <p>Qoutation Nº: {{areq['_id']}}</p>
+                                <p>Request Date: {{stdconv(areq['request_date']).strftime("%d")}} {{stdconv(areq['request_date']).strftime("%b")}} {{stdconv(areq['request_date']).strftime("%y")}}</p>
+                                <p>Measurement date: {{nowtime}}</p>
+                                <p>Date Qoutation: {{nowtime}}</p>
+                            </div>
+                        </div>
+                            
+                        </div>
+                        <!-- upper part end -->
+                        <div class="table-responsive">
+                            <div style="width: 1000px; ">
+                                
+                                <div style="width: 80%; margin: 10px auto;">
+                                    <p style="color: black; font-size: 1.4rem;"><b>BILLING OF QUALITY FOR NEW WATER CONNECTION</b> </p>
+                                </div>
+                                
+                            </div>
+                                
+                            </div>
+                        <!-- lower part start -->
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-md">
+                              <tbody>
+                              <tr>
+                                <th colspan="3">Branch Name</th>
+                                <th colspan="2">{{areq['branch']['name']}}</th>
+                              </tr>
+                              <tr>
+                                <th colspan="5"><pre>II.      Description of material to be used for connection</pre></th>
+                              </tr>
+                              <tr>
+                                <th>#</th>
+                                <th>Item Description</th>
+                                <th>quantity</th>
+                                <th>Unit Price</th>
+                                <th>Total price</th>
+                              </tr>
+                              <tr id="item1" class="items">
+                                <td>1</td>
+                                <td><input type="text" style="border-style:none;"></td>
+                                <td><input type="number" name="" id="iq1" min="0" value="0" style="border-style:none;" onchange="itemfunct(this)"></td>
+                                <td><input type="number" name="" id="ipu1" min="0" value="0" style="border-style:none;" onchange="itemfunct(this)"></td>
+                                <td id="itt1">0</td>
+                              </tr>
+                              <tr>
+                                <td colspan="4"><b>S/TOTAL I</b></td>
+                                <td id="ittps">0</td>
+                              </tr>
+                              <tr>
+                                <td colspan="5"></td>
+                              <tr>
+                                <td colspan="5"><b><pre>III.       MANPOWER</pre></b></td>
+                              </tr>
+                              <tr id="manp1" class="mans">
+                                <td>1</td>
+                                <td><input type="text" style="border-style:none;"></td>
+                                <td><input type="number" name="" id="mq1" min="0" value="0" style="border-style:none;" onchange="manpfunct(this)"></td>
+                                <td><input type="number" name="" id="mppu1" min="0" value="0" style="border-style:none;" onchange="manpfunct(this)"></td>
+                                <td id="mtt1">0</td>
+                              </tr>
+                              
+                              <tr>
+                                <td colspan="4"><b>S/TOTAL II</b></td>
+                                <td id="mttps">0</td>
+                              </tr>
+                              <tr>
+                                <td colspan="4"><b>S/TOTAL III</b></td>
+                                <td id="total3">0</td>
+                              </tr>
+                              <tr>
+                                <td colspan="4" ><b>VAT(18%)</b></td>
+                                <td id="vat">0</td>
+                              </tr>
+                              <tr>
+                                <td colspan="4"><b>TOTAL (All taxes included)</b></td>
+                                <td id="total4">0</td>
+                              </tr>
+                              <tr style="border-collapse: collapse; border-style: hidden;">
+                                <td colspan="6" style="border-collapse: collapse; border-style: hidden;"><pre><b>Amount in word:</b>  <span id="wrdamt">.....</span></pre></td>
+                              </tr>
+                              <!-- style="border-collapse: collapse; border-style: hidden;" -->
+                              <tr style="border-collapse: collapse; border-style: hidden;">
+                                <td colspan="2" style="border-collapse: collapse; border-style: hidden;"></td>
+                                <td colspan="2"style="border-collapse: collapse; border-style: hidden;"></td>
+                                <td colspan="2" style="border-collapse: collapse; border-style: hidden;"></td>
+                              </tr>
+                              <tr style="border-collapse: collapse; border-style: hidden;">
+                                <td colspan="2" style="border-collapse: collapse; border-style: hidden;"></td>
+                                <td colspan="2"style="border-collapse: collapse; border-style: hidden;"></td>
+                                <td colspan="2" style="border-collapse: collapse; border-style: hidden;"></td>
+                              </tr>
+                              <tr style="border-collapse: collapse; border-style: hidden;">
+                                <td colspan="2" style="border-collapse: collapse; border-style: hidden;" ></td>
+                                <td colspan="2" style="border-collapse: collapse; border-style: hidden;"></td>
+                                <td colspan="2" style="border-collapse: collapse; border-style: hidden;"></td>
+                              </tr>
+                              <tr style="border-collapse: collapse; border-style: hidden;">
+                                <td colspan="2" style="border-collapse: collapse; border-style: hidden;"></td>
+                                <td colspan="2" style="border-collapse: collapse; border-style: hidden;"></td>
+                                <td colspan="2" style="border-collapse: collapse; border-style: hidden;"></td>
+                              </tr>
+                              <tr style="border-collapse: collapse; border-style: hidden;">
+                                <td colspan="2" style="border-collapse: collapse; border-style: hidden;"><b>Prepared by:</b></td>
+                                <td colspan="2" style="border-collapse: collapse; border-style: hidden;"><b>Verified by:</b></td>
+                                <td colspan="2" style="border-collapse: collapse; border-style: hidden;"><b>Approved by:</b></td>
+                              </tr>
+                              <tr style="border-collapse: collapse; border-style: hidden;">
+                                <td colspan="2" style="border-collapse: collapse; border-style: hidden;">Water Distribution Officer</td>
+                                <td colspan="2" style="border-collapse: collapse; border-style: hidden;">Water Distribution Officer</td>
+                                <td colspan="2" style="border-collapse: collapse; border-style: hidden;">Head Of Branch</td>
+                              </tr>
+                              <tr style="border-collapse: collapse; border-style: hidden;">
+                                <td colspan="2" style="border-collapse: collapse; border-style: hidden;"><b>{{user['lastname']}} {{user['firstname']}}</b></td>
+                                <td colspan="2" style="border-collapse: collapse; border-style: hidden;"><b>{{user['lastname']}} {{user['firstname']}}</b></td>
+                                <td colspan="2" style="border-collapse: collapse; border-style: hidden;"><b>{{hob['hobs'][0]['lastname']}} {{hob['hobs'][0]['firstname']}}</b></td>
+                              </tr>
+                            </tbody></table>
+                          </div>
+                          <!-- lower part end -->
+                      </div>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- the end of the table  -->
+        </section>
+      </div>
+      <footer class="main-footer">
+        <div class="footer-left">
+          WASAC &copy; 2023
+        </div>
+        <div class="footer-right">
+          
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- General JS Scripts -->
+  <script src="/static/assets/modules/jquery.min.js"></script>
+  <script src="/static/assets/modules/popper.js"></script>
+  <script src="/static/assets/modules/tooltip.js"></script>
+  <script src="/static/assets/modules/bootstrap/js/bootstrap.min.js"></script>
+  <script src="/static/assets/modules/nicescroll/jquery.nicescroll.min.js"></script>
+  <script src="/static/assets/modules/moment.min.js"></script>
+  <script src="/static/assets/js/stisla.js"></script>
+  
+  <!-- JS Libraies -->
+  <script src="/static/assets/modules/sweetalert/sweetalert.min.js"></script>
+  <!-- Page Specific JS File -->
+  <script src="/static/assets/js/page/modules-sweetalert.js"></script>
+  <!-- Template JS File -->
+  <script src="/static/assets/js/scripts.js"></script>
+  <script src="/static/assets/js/custom.js"></script>
+  <script src="/static/requestwater.js"></script>
+  <script src="/static/wdo.js"></script>
+</body>
+</html>

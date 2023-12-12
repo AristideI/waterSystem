@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+  <title>Dashboard</title>
+
+  <!-- General CSS Files -->
+  <link rel="stylesheet" href="/static/assets/modules/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/static/assets/modules/fontawesome/css/all.min.css">
+
+  <!-- CSS Libraries -->
+  <link rel="icon" href="{{ url_for('static', filename='images/icons/icon-152x152.png') }}" type="image/x-icon">
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="/static/assets/css/style.css">
+  <link rel="stylesheet" href="/static/assets/css/components.css">
+<!-- Start GA -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-94034622-3');
+</script>
+<!-- /END GA --></head>
+
+<body>
+  <div id="app">
+    <div class="main-wrapper main-wrapper-1">
+      <div class="navbar-bg"></div>
+      <nav class="navbar navbar-expand-lg main-navbar">
+        <form class="form-inline mr-auto">
+          <ul class="navbar-nav mr-3">
+            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
+            <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
+          </ul>
+        </form>
+        <ul class="navbar-nav navbar-right">
+          
+          <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep"><i class="far fa-bell"></i></a>
+            <div class="dropdown-menu dropdown-list dropdown-menu-right">
+              <div class="dropdown-header">Notifications
+                <div class="float-right">
+                  
+                </div>
+              </div>
+              <div class="dropdown-list-content dropdown-list-icons">
+                <a href="#" class="dropdown-item dropdown-item-unread">
+                  <div class="dropdown-item-icon bg-info text-white">
+                    <i class="fas fa-bell"></i>
+                  </div>
+                  <div class="dropdown-item-desc">
+                    Template update is available now!
+                    <div class="time text-primary">2 Min Ago</div>
+                  </div>
+                </a>
+                <a href="#" class="dropdown-item">
+                  <div class="dropdown-item-icon bg-success text-white">
+                    <i class="fas fa-check"></i>
+                  </div>
+                  <div class="dropdown-item-desc">
+                    <b>You</b> and <b>Dedik Sugiharto</b> are now friends
+                    <div class="time">10 Hours Ago</div>
+                  </div>
+                </a>
+                
+              </div>
+              <div class="dropdown-footer text-center">
+                
+              </div>
+            </div>
+          </li>
+          <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+            <img alt="image" src="/static/assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
+            <div class="d-sm-none d-lg-inline-block">Hi, {{user['lastname']}} {{user['firstname']}}</div></a>
+            <div class="dropdown-menu dropdown-menu-right">
+              <div class="dropdown-divider"></div>
+              <a href="{{url_for('logout')}}" class="dropdown-item has-icon text-danger">
+                <i class="fas fa-sign-out-alt"></i> Logout
+              </a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <div class="main-sidebar sidebar-style-2">
+        <aside id="sidebar-wrapper">
+          <div class="sidebar-brand">
+            <a href="#">WASAC</a>
+          </div>
+          <div class="sidebar-brand sidebar-brand-sm">
+            <a href="#">W</a>
+          </div>
+          <ul class="sidebar-menu">
+            <li class="menu-header">Dashboard</li>
+
+            <li class="dropdown active">
+              <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Menu</span></a>
+              <ul class="dropdown-menu">
+                <li><a class="nav-link" href="#">Dashboard</a></li>
+                <li><a class="nav-link" href="{{url_for('customerTrackRequest')}}">Track the request</a></li>
+                <li><a class="nav-link" href="{{url_for('prePayment')}}">Payment Level Requests</a></li>
+              </ul>
+            </li>
+          </ul>
+
+        </aside>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <section class="section">
+          <div class="section-header">
+            <h1>Request New Water Connection</h1>
+          </div>
+
+          <div class="section-body">
+            <h2 class="section-title">Forms</h2>
+            <p class="section-lead">
+              Fill all the required fields below
+            </p>
+
+            <div class="row">
+              <div class="col-12 col-md-6 col-lg-6">
+                <div class="card">
+                  <div class="card-header">
+                    <h4>WASAC</h4>
+                  </div>
+                  {%for msg in get_flashed_messages()%} {% if 'not saved' in msg%}
+              <div class="card-header"><p style="color:red;">{{msg}}</p></div>
+                    {%elif 'successfully' in msg%}
+                    <div class="card-header"><p style="color:green;">{{msg}}</p></div>
+                    {%endif%} {%endfor%}
+                  <form method="post" enctype="multipart/form-data">
+                  <div class="card-body">
+
+                      <div class="form-group">
+                        <label>First Name</label>
+                        <input type="text" name="fn" class="form-control" value="{{user['firstname']}}" readonly>
+                      </div>
+                      <div class="form-group">
+                        <label>Last Name</label>
+                        <input type="text" name="ln" class="form-control" value="{{user['lastname']}}" readonly>
+                      </div>
+                      <div class="form-group">
+                        <label>Phone</label>
+                        <input type="text" name="phone" class="form-control" value="{{user['phone']}}" readonly>
+                      </div>
+                      <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" name="email" class="form-control" value="{{user['email']}}" readonly>
+                      </div>
+                      <div class="form-group">
+                        <label>Natinal ID or Passport Number</label>
+                        <input type="text" name="nid" class="form-control" required>
+                      </div>
+                      <div class="form-group">
+                        <label>Plot Number</label>
+                        <input type="text" name="plotn" class="form-control" required>
+                      </div>
+                      <div class="form-group">
+                        <label>Water Usage</label>
+                        <select name="wu" class="form-control">
+                          <option>residential</option>
+                          <option>commercial</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label>Province</label>
+                        <select name="prov" id="prov" class="form-control">
+                          <option>choose</option>
+                          {%for i in provinces%}
+                          <option>{{i['province']}}</option>
+                          {%endfor%}
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label>District</label>
+                        <select name="distr" id="distr" class="form-control" required>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label>Sector</label>
+                        <select name="sect" id="sect" class="form-control" required>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label>Cell</label>
+                        <select name="cell" id="cell" class="form-control" required>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label>Village</label>
+                        <input type="text" name="vill" class="form-control" required>
+                      </div>
+                      <div class="form-group">
+                        <label>Branch</label>
+                        <select name="bra" id="bra" class="form-control" required>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label>National ID</label>
+                        <input type="file" name="niddoc" required accept=".pdf" class="form-control">
+                      </div>
+                      <div class="form-group">
+                        <label>UPI</label>
+                        <input type="file" name="upidoc" required accept=".pdf" class="form-control">
+                      </div>
+                    </div>
+                    <div class="card-footer text-right">
+                      <button class="btn btn-primary mr-1" type="submit">Submit</button>
+                    </div>
+                  </form>
+                </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <footer class="main-footer">
+        <div class="footer-left">
+          WASAC &copy; 2023
+        </div>
+        <div class="footer-right">
+          
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- General JS Scripts -->
+  <script src="/static/assets/modules/jquery.min.js"></script>
+  <script src="/static/assets/modules/popper.js"></script>
+  <script src="/static/assets/modules/tooltip.js"></script>
+  <script src="/static/assets/modules/bootstrap/js/bootstrap.min.js"></script>
+  <script src="/static/assets/modules/nicescroll/jquery.nicescroll.min.js"></script>
+  <script src="/static/assets/modules/moment.min.js"></script>
+  <script src="/static/assets/js/stisla.js"></script>
+  
+  <!-- JS Libraies -->
+
+  <!-- Page Specific JS File -->
+  
+  <!-- Template JS File -->
+  <script src="/static/assets/js/scripts.js"></script>
+  <script src="/static/assets/js/custom.js"></script>
+  <script src="/static/requestwater.js"></script>
+</body>
+</html>
